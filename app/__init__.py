@@ -1,23 +1,33 @@
 from flask import Flask,url_for,render_template, request, redirect
-from forms import SignupForm
+from forms import SignupForm, PostForm
 
 def create_app(config):
     app = Flask(__name__)
     app.config['SECRET_KEY'] = '7110c8ae51a4b5af97be6534caef90e4bb9bdcb3380af008f90b23a5d1616bf319bc298105da20fe'
     app.config.from_object(config)  # Aplica la configuración
     
+    posts=[]
+        
     @app.route('/')
     def index():
-        posts=["Migue", "Muñoz"]
-        return render_template("index.html", num_posts=len(posts))
+        return render_template("index.html", num_posts=len(posts), posts=posts)
     @app.route("/p/<string:slug>")
     def show_post(slug):
         # print(url_for("show_post", slug="leccion-1", preview=False))
         return render_template("post_view.html", slug_title=slug)
-    @app.route("/admin/post/") #crea el post
-    @app.route("/admin/post/<int:post_id>")#modifica el post.
+    @app.route("/admin/post/", methods=["GET", "POST"], defaults={"post_id":None}) #crea el post
+    @app.route("/admin/post/<int:post_id>", methods=["GET","POST"])#modifica el post.
     def post_form(post_id=None):
-        return render_template ("admin/post_form.html", post_id=post_id)
+        form = PostForm()
+        if form.validate_on_submit():
+            title = form.title.data
+            title_slug = form.title_slug.data
+            content = form.content.data
+            
+            post = {"title": title, "title_slug": title_slug, "content": content}
+            posts.append(post)  
+            return redirect(url_for("index"))
+        return render_template ("admin/post_form.html", form=form)
     @app.route("/signup/", methods=["GET", "POST"])
     def show_signup_form():
         form = SignupForm()    
