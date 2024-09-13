@@ -4,4 +4,12 @@
 
 {% block content %}
     <h1>Usuarios registrados: </h1>
+    <br>
+    {% for usuario in usuarios%}
+    <p>{{usuario.id}}. {{usuario.nombre}} - {{usuario.correo}} - {{usuario.contrasena}}        
+    </p>
+    {% endfor%}
+    
+
+
 {% endblock %}
