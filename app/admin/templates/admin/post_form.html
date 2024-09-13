@@ -1,12 +1,6 @@
 {% extends "base_template.html" %}
 
-{% block title %}
-    {% if form.title.data %}
-        {{ form.title.data }}
-    {% else %}
-        Nueva entrada
-    {% endif %}
-{% endblock %}
+
 
 {% block content %}
     <form action="" method="post" novalidate>
@@ -18,19 +12,18 @@
             <span style="color: red;">{{ error }}</span>
             {% endfor %}
         </div>
-
         <div>
-            {{ form.content.label }}
-            {{ form.content }}<br>
-            {% for error in form.content.errors %}
+            {{ form.bibliography.label }}
+            {{ form.bibliography(size=128) }}<br>
+            {% for error in form.bibliography.errors %}
             <span style="color: red;">{{ error }}</span>
             {% endfor %}
         </div>
 
         <div>
-            {{ form.bibliography.label }}
-            {{ form.bibliography(size=128) }}<br>
-            {% for error in form.bibliography.errors %}
+            {{ form.content.label }}
+            {{ form.content }}<br>
+            {% for error in form.content.errors %}
             <span style="color: red;">{{ error }}</span>
             {% endfor %}
         </div>

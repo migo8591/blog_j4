@@ -15,12 +15,11 @@ def post_form(post_id):
     form = PostForm()
     if form.validate_on_submit():
         post = Posts(titulo = form.title.data, titulo_slug = form.title_slug.data, contenido = form.content.data, bibliografia = form.bibliography.data)
+        db.session.add(post)
+        db.session.commit()
         form.title.data =""
         form.title_slug.data =""
         form.content.data =""
         form.bibliography.data =""
-        db.session.add(post)
-        db.session.commit()
-    
         return redirect(url_for("public.index"))
     return render_template("admin/post_form.html", form=form)
