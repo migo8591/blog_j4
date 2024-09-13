@@ -1,0 +1,38 @@
++ miniblog
+|_ app
+   |_ __init__.py
+   |_ models.py
+   |_ admin/
+      |_ __init__.py
+      |_ forms.py
+      |_ routes.py
+      |_ templates/
+         |_ admin/
+            |_ post_form.html
+   |_ auth/
+      |_ __init__.py
+      |_ forms.py
+      |_ models.py
+      |_ routes.py
+      |_ templates/
+         |_ auth/
+            |_ login_form.html
+            |_ signup_form.html
+   |_ public/
+      |_ __init__.py
+      |_ routes.py
+      |_ templates/
+         |_ public
+            |_ index.html
+            |_ post_view.html
+   |_ static/
+      |_ base.css
+   |_ templates/
+      |_ base_template.html
+|_ env/
+|_ .gitignore
+|_ CHANGELOG.md
+|_ entrypoint.py
+|_ LICENSE
+|_ README.md
+|_ requirements.txt
