@@ -5,6 +5,9 @@
   - [Subsección 1.1](#subsección-11)
 - [3. Implementando el formulario](#3-implementando-el-formulario)
 - [4. Login de usuario en Flask](#4-login-de-usuario-en-flask)
+- [10. Login Codemy Flasker](#10-login-codemy-flasker)
+- [11. Update a record in the database Codemy Flasker](#11-update-a-record-in-the-database-codemy-flasker)
+- [12. How to migrate database with flask](#12-how-to-migrate-database-with-flask)
 
 
 - [Conclusión](#conclusión)
@@ -144,8 +147,64 @@ from werkzeug.urls import url_parse
         return render_template('login_form.html', form=form)
 11. Aplicar cambios en la vista de registro ("/signup")
 
+# 10. Login Codemy Flasker
+1. from werkzeug.security import generate_password_hash, check_password_hash
+2. class User(db.Model):
+    id:....
+    :
+    Do some password stuff
+    password_hash: db.Column(db.String(128))
+
+    @property
+    def password(self)
+        raise Attribute("password is not a readable attribute)
+    @password.setter
+    def password(self, password):
+        self.password_hash = generate_password_hash(password)
+    def verify_password(self, password):
+        return check_password_hash(self.password_hash, password)
+3. En el archivo form.py
+* De wtforms se necesitará PasswordField, BooleanField, ValidationError
+password_hash = PasswordField("Enter password", validator=[DataRequired(), EqualTo("password_hash2", message="Passwords must be equal")])
+* De wtforms.validators se necesitará EqualTo, Length
+password_hash2 = PasswordField("Confirm password", validator=[DataRequired()])
+4. Para "hashear" el password se hace desde la ruta antes de guardar los datos del formulario en la variable que los guarda en la database.
+    hashed_pw = generate_password_hash(form.password_hash.data, "sha256"). Esta variable se utiliza para guardar en la database.
+Video 15
+
 [Volver al Indice](#indice)
-# Seccion 5
+
+# 11. Update a record in the database Codemy Flasker
+Video 10
+
+[Volver al Indice](#indice)
+# 12. How to migrate database with flask
+1. Agregar la columna en la clase - modelo. 
+2. Actualizar la clase correspondiente de FlaskForm
+3. Crear la variable que guardara la informacion que viene del formulario.
+4. Crear la variable que guardara la informacion en la database en la ruta correspondiente.
+5. Limpiar form.xxx.data = ""
+6. Utilizar donde sea necesario.
+7. pip install Flask-Migrate
+8. En el __init__.py principal: from frask_migrate import Migrate
+9. Instanciar debajo de la instancia db: migrate = Migrate(app, db)
+    *Nota: 
+        migrate = Migrate()
+        def create_app(config=None) -> "Debe llevar None"
+            :
+            migrate.init_app(app, db)
+10. En la consola: flask db init
+11. Se crea un a carpeta migrations con versions y alembicios
+12. flask db: para ayuda
+13. flask db migrate -m "comentario: initial migration"
+14. flask db upgrade ("El push")
+
+
+"So usually when it comes to databases in anything flask, django, ruby on rails any sort of web framework dealing with database is alwayas a two-step process you create a migration and then you push the migration so...We are going to use something called flask migrate to take of all this stuff it's an extension that sort of deals with all this for sql alchemy"
+- dash
+
 [Volver al Indice](#indice)
 # Seccion 6
+
+
 [Volver al Indice](#indice)

@@ -3,5 +3,13 @@
 {% block title %}Tutorial Flask: Miniblog{% endblock %}
 
 {% block content %}
-    <h1>Index</h1>
+    {% for message in get_flashed_messages() %}
+    <p>{{ message }}</p>  MigrateManager
+    {% endfor %}
+    <h1>Blog de la Enseñanza Costarricense</h1>
+    <h2>Cantidad de post: {{num_post}}</h2>
+    <br>
+    {% for post in posts %}
+    <p>{{post.id}}. {{post.titulo}}. Fecha de creación: {{post.fecha_creacion}}. Bibliografia consultada: {{post.bibliografia}}</p>
+    {% endfor %}
 {% endblock %}

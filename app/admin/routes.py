@@ -1,8 +1,8 @@
 from flask import render_template, redirect, url_for
 from . import admin_bp
-from models import Users
-from .forms import PostForm
-
+from models import Users, Posts
+from forms import PostForm
+from extensions import db
 
 @admin_bp.route("/users/")
 def usuarios():
@@ -14,10 +14,12 @@ def usuarios():
 def post_form(post_id):
     form = PostForm()
     if form.validate_on_submit():
-        title = form.title.data
-        title_slug = form.title_slug.data
-        content = form.content.data
-        
-        post = {"title": title, "title_slug": title_slug, "content": content}
+        post = Posts(titulo = form.title.data, titulo_slug = form.title_slug.data, contenido = form.content.data, bibliografia = form.bibliography.data)
+        db.session.add(post)
+        db.session.commit()
+        form.title.data =""
+        form.title_slug.data =""
+        form.content.data =""
+        form.bibliography.data =""
         return redirect(url_for("public.index"))
     return render_template("admin/post_form.html", form=form)
