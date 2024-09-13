@@ -1,8 +1,7 @@
 from flask import Flask
 from .public import public_bp
 from .auth import auth_bp
-
-# from forms import SignupForm, PostForm
+from .admin import admin_bp
 
 def create_app(config):
     app = Flask(__name__)
@@ -10,6 +9,7 @@ def create_app(config):
     app.config.from_object(config)  # Aplica la configuración
     app.register_blueprint(auth_bp)
     app.register_blueprint(public_bp)
+    app.register_blueprint(admin_bp)
     # posts=[]
         
     # @app.route('/')
