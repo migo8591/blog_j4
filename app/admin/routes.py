@@ -1,7 +1,7 @@
 from flask import render_template, redirect, url_for
 from . import admin_bp
 from models import Users, Posts
-from forms import PostForm
+from .forms import PostForm
 from extensions import db
 
 @admin_bp.route("/users/")

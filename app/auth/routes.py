@@ -1,6 +1,6 @@
 from flask import Flask,url_for,render_template, request, redirect, flash
 from . import auth_bp
-from forms import SignupForm
+from .forms import SignupForm
 from models import Users
 from extensions import db
 
@@ -19,14 +19,5 @@ def show_signup_form():
         flash("User added successfully")
         return redirect(url_for("public.index"))
     return render_template("auth/signup_form.html", form=form)
-    # if form.validate_on_submit():
-    #     name = form.name.data
-    #     email = form.email.data
-    #     password = form.password.data
-    #     next = request.args.get("next", None)
-    #     print(f"Usuario:{name}, email {email} y password: {password}. Valor de next: {next}")
-    #     if next:
-    #         return redirect(next)
-    #     return redirect(url_for("public.index"))
-    # return render_template("auth/signup_form.html", form=form)    
+
     
