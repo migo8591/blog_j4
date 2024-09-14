@@ -21,5 +21,6 @@ def post_form(post_id):
         form.title_slug.data =""
         form.content.data =""
         form.bible.data =""
+        print("Informacion de form:", dir(form))
         return redirect(url_for("public.index"))
     return render_template("admin/post.html", form=form)

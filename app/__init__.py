@@ -5,6 +5,7 @@ from .admin import admin_bp
 from extensions import db
 from flask_login import LoginManager, current_user
 from flask_migrate import Migrate
+from models import users
 
 migrate= Migrate()
 
@@ -21,7 +22,13 @@ def create_app(config=None):
     migrate.init_app(app, db)
     with app.app_context():
         db.create_all()
- 
-
+    # 
+    login_manager = LoginManager(app)
+    @login_manager.user_loader
+    def load_user(user_id):
+        for user in users:
+            if user.id == int(user_id):
+                return user
+        return None
 
     return app
