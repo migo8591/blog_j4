@@ -3,6 +3,7 @@ from . import admin_bp
 from models import Users, Posts
 from .forms import PostForm
 from extensions import db
+from flask_login import login_required
 
 @admin_bp.route("/users/")
 def usuarios():
@@ -11,6 +12,7 @@ def usuarios():
 
 @admin_bp.route("/post/", methods=["GET","POST"], defaults={"post_id":None})
 @admin_bp.route("/post/<int:post_id>/", methods = ["GET","POST"])
+@login_required
 def post_form(post_id):
     form = PostForm()
     if form.validate_on_submit():
@@ -21,5 +23,6 @@ def post_form(post_id):
         form.title_slug.data =""
         form.content.data =""
         form.bible.data =""
+        print("Informacion de form:", dir(form))
         return redirect(url_for("public.index"))
     return render_template("admin/post.html", form=form)

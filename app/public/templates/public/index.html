@@ -4,9 +4,9 @@
 
 {% block content %}
     {% for message in get_flashed_messages() %}
-    <p>{{ message }}</p>  MigrateManager
+    <p>{{ message }}</p> 
     {% endfor %}
-    <h1>Blog de la Enseñanza Costarricense</h1>
+    <h1 style="color:green">Blog de la Enseñanza Costarricense</h1>
     <h2>Cantidad de post: {{num_post}}</h2>
     <br>
     {% for post in posts %}

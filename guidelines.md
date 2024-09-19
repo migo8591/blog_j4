@@ -147,6 +147,54 @@ from werkzeug.urls import url_parse
         return render_template('login_form.html', form=form)
 11. Aplicar cambios en la vista de registro ("/signup")
 
+    :
+    ***
+    :
+    ---
+    ***
+    ---
+12. Pasos para el logout:
+    1. Se añade una nueva vista en el fichero: 
+    ~~~
+    @auth_bp.route("/logout")
+    def logout():
+        logout_user()
+        return redirect(url_for("index"))
+    ~~~
+    `print("Finalizo sesión")`
+
+13. Protegiendo las vistas:
+    1. Añandiendo el decorador `@login_required` a un vista es como se protege el acceso a las vistas.
+
+14. Si no se quiere que la aplicación muestre "error 401" o bien "Unauthorized" Se debe personalizar el objeto `login_manager`. En este caso, lo que se hace es indicarle cuál es la vista para realizar el login:
+    ~~~
+    login_manager = LoginManager(app)
+    login_manager.login_view = "login"
+    ~~~
+
+15. Mostrando la información del usuario logueado en las plantillas:
+    15. 1. Incluir el siguiente codigo en la plantilla base_template.html:
+
+    ~~~
+    <body>
+    <div>
+        <ul class="user-info">
+            <li><a href="{{ url_for('index') }}">Home</a></li>
+            {% if current_user.is_anonymous %}
+                <li><a href="{{ url_for('login') }}">Login</a></li>
+                <li> | </li>
+                <li><a href="{{ url_for('show_signup_form') }}">Registrar</a></li>
+            {% else %}
+                <li>{{ current_user.name }}</li>
+                <li> | </li>
+                <li><a href="{{ url_for('logout') }}">Logout</a></li>
+            {% endif %}
+        </ul>
+    </div>
+    {% block content %}{% endblock %}
+    </body>
+    ~~~
+
 # 10. Login Codemy Flasker
 1. from werkzeug.security import generate_password_hash, check_password_hash
 2. class User(db.Model):
@@ -208,3 +256,8 @@ Video 10
 
 
 [Volver al Indice](#indice)
+
+\(No puede incorporar a enzito\)
+
+![Enzito](https://picsum.photos/id/237/200/300)
+
