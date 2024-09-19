@@ -5,7 +5,7 @@ from models import Users, User, users, get_user
 from extensions import db
 # from werkzeug.urls import url_parse
 from urllib.parse import urlparse
-from flask_login import current_user, login_user
+from flask_login import current_user, login_user, logout_user
 
 @auth_bp.route('/signup/', methods=['GET', 'POST'])
 def show_signup_form():
@@ -123,5 +123,8 @@ def login():
 # https://chatgpt.com/share/66e5d4ea-02d0-800d-a6d5-42a1e0949e22
 
 
-
+@auth_bp.route("/logout")
+def logout():
+    logout_user()
+    return redirect(url_for("public.index"))
 

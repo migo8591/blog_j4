@@ -24,6 +24,7 @@ def create_app(config=None):
         db.create_all()
     # 
     login_manager = LoginManager(app)
+    login_manager.login_view = "auth.login"
     @login_manager.user_loader
     def load_user(user_id):
         for user in users:

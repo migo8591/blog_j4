@@ -4,6 +4,10 @@
 
 {% block content %}
     <div>
+        <h1 style="color:green">Login</h1>
+    {% for message in get_flashed_messages() %}
+        <div style="color: red;">{{ message }}</div>
+    {% endfor %}
         <form action="" method="post" novalidate>
             {{ form.hidden_tag() }}
             <div>
